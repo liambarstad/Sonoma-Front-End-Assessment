@@ -1,16 +1,14 @@
-const itemUrl = 'https://www.westelm.com/services/catalog/v4/category/shop/new/all-new/index.json'
+const itemUrl = 'http://www.westelm.com/services/catalog/v4/category/shop/new/all-new/index.json'
 const fetch = require('isomorphic-fetch')
 
-class ItemsService {
+export default class ItemsService {
   constructor() {
     this.itemUrl = itemUrl
   }
 
   getItems() {
-    return fetch(itemUrl)
-      .then((data) => { return data })
+    // need to fix cors issue
+    return require('../data/items.json')
   }
 
 }
-
-module.exports = ItemsService

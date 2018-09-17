@@ -12,6 +12,12 @@ export default class Items {
     this._appendItems(data.groups, itemsDiv)
   }
 
+  displayPopout(parentEl, coordinates) {
+    this._removeAllPopouts()
+    let item = this.items.find((item) => { return item.id === parentEl.id })
+    item.displayPopout(coordinates)
+  }
+
   _appendItems(data, itemsDiv) {
     data.forEach((item, ind) => {
       let itemObj = new Item(item)
@@ -20,4 +26,10 @@ export default class Items {
     })
   }
 
+  _removeAllPopouts() {
+    let popouts = document.getElementsByClassName('item-popout')
+    while (popouts.length > 0) {
+      popouts[0].parentNode.removeChild(popouts[0])
+    }
+  }
 }

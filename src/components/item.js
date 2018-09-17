@@ -5,17 +5,20 @@ export default class Item {
     this.link = data.links.www
     this.low = data.priceRange.selling.low
     this.high = data.priceRange.selling.high
-    this.imageHref = data.thumbnail.href
+    this.imageHref = data.hero.href
     this._initializeImages()
   }
 
   html() {
     return `
-      <div>
-        <h1>${this.name}</h1>
-        <h2><a href=${this.link}>View on Site</a></h2>
-        <h3>Price: ${this.low} - ${this.high}</h3>
-        <img href=${this.imageHref} />
+      <div class="item">
+        <p class="item-title">
+          <a href=${this.link}>
+            ${this.name}
+          </a>
+        </p>
+        <p class="item-price">$${this.low} - $${this.high}</p>
+        <img src=${this.imageHref} />
       </div>
     `
   }

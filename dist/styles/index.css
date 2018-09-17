@@ -1,5 +1,41 @@
-#items {
-  height: 100%;
-  width: 100%;
-  background-color: blue;
+/*
+  web:
+*/
+@media only screen and (min-device-width: 800px) {
+  
+  #items {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .item {
+    width: 33%;
+    display: inline;
+    float: left;
+    box-sizing: border-box;
+  }
+
+}
+
+/*
+  phone:
+*/
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+  #items {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .item {
+    display: inline;
+    float: left;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
 }

@@ -12,13 +12,15 @@ export default class Item {
   html() {
     return `
       <div class="item">
-        <p class="item-title">
-          <a href=${this.link}>
+        <img src=${this.imageHref} />
+        <div class="item-title-container">
+          <a class="item-title" href=${this.link}>
             ${this.name}
           </a>
-        </p>
-        <p class="item-price">$${this.low} - $${this.high}</p>
-        <img src=${this.imageHref} />
+        </div>
+        <div class="item-price-container">
+          <p class="item-price">$ ${this.high}</p>
+        </div>
       </div>
     `
   }

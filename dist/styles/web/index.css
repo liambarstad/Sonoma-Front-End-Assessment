@@ -103,4 +103,23 @@
     opacity: 0.8;
     border-radius: 50px;
   }
+
+  .popout-bottom-bar {
+    position: absolute;
+    bottom: 0px;
+    height: 8%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.3);
+  }
+
+  .popout-bottom-circle {
+    height: 9px;
+    width: 9px;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
 }

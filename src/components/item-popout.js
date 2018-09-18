@@ -1,4 +1,6 @@
 const closeIcon = require('../static/close-icon.png')
+const leftArrow = require('../static/arrow-left.png')
+const rightArrow = require('../static/arrow-right.png')
 
 export default class ItemPopout {
   constructor(images) {
@@ -15,14 +17,11 @@ export default class ItemPopout {
   }
 
   _addInnerHtml(div) {
-    let images = this._images()
-    let closeImage = this._closeIcon()
-    div.appendChild(images)
-    div.appendChild(closeImage)
+    div.appendChild(this._images())
+    div.appendChild(this._closeIcon())
+    div.appendChild(this._leftArrow())
+    div.appendChild(this._rightArrow())
     return div
-    // right arrow
-    // left arrow
-    // bottom bar
   }
 
   _images() {
@@ -38,6 +37,28 @@ export default class ItemPopout {
     closeImage.alt = 'close-button'
     closeImage.classList.add('popout-close')
     return closeImage
+  }
+
+  _leftArrow() {
+    let leftDiv = document.createElement('div')
+    leftDiv.classList.add('arrow-container-left')
+    let leftImage = new Image()
+    leftImage.src = leftArrow
+    leftImage.alt = 'left-arrow'
+    leftImage.classList.add('popout-arrow')
+    leftDiv.appendChild(leftImage)
+    return leftDiv
+  }
+
+  _rightArrow() {
+    let rightDiv = document.createElement('div')
+    rightDiv.classList.add('arrow-container-right')
+    let rightImage = new Image()
+    rightImage.src = rightArrow
+    rightImage.alt = 'right-arrow'
+    rightImage.classList.add('popout-arrow')
+    rightDiv.appendChild(rightImage)
+    return rightDiv
   }
 
   _parseHtmlImages() {

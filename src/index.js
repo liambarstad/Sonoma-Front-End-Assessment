@@ -6,4 +6,6 @@ let itemsListeners
 document.addEventListener("DOMContentLoaded", () => {
   itemsListeners = new ItemsEventListeners()  
   itemsListeners.onItemImageClick()
+  itemsListeners.onPopoutClose()
+  itemsListeners.onArrowClick()
 })

@@ -1,4 +1,6 @@
 const Items = require('../components/items').default
+const circleImg = require('../static/circle.svg')
+const selectedCircleImg = require('../static/selected-circle.svg')
 
 export default class ItemsEventListeners {
   constructor() {
@@ -11,7 +13,6 @@ export default class ItemsEventListeners {
       let parentEl = event.target.parentElement
       if (parentEl.classList.contains('item')) {
         let popout = this.items.displayPopout(parentEl, { x: event.clientX, y: event.clientY })
-        //this._onImageMouseOver()
       }
     })
   }
@@ -26,24 +27,51 @@ export default class ItemsEventListeners {
 
   onArrowClick() {
     document.addEventListener('click', (event) => {
-      if (event.target.classList.contains('popout-arrow-left')) {
-        console.log('left') 
-      } else if (event.target.classList.contains('popout-arrow-right')) {
-        console.log('right')
+      let classes = event.target.classList
+      let parentClasses = event.target.parentElement.classList
+      if (classes.contains('arrow-container-left') || parentClasses.contains('arrow-container-left')) {
+        this._leftArrowClick(event)
+      } else if (classes.contains('arrow-container-right') || parentClasses.contains('arrow-container-right')) {
+        this._rightArrowClick(event)
       }
     })
   }
 
-  /*
-  _onImageMouseOver() {
-    let popout = document.getElementsByClassName('item-popout')[0]
-    popout.addEventListener('mouseover', (event) => {
-      let leftArrow = event.target.getElementsByClassName('popout-arrow-left')[0]
-      let rightArrow = event.target.getElementsByClassName('popout-arrow-right')[0]
-      leftArrow.classList.toggle('visible')
-      rightArrow.classList.toggle('visible')
-    })
+  _leftArrowClick(event) {
+    let bottomBar = document.getElementsByClassName('popout-bottom-bar')[0]
+    if (!bottomBar.firstChild.classList.contains('selected-circle')) {
+      let imgs = document.getElementsByClassName('popout-images')[0]
+      this._shiftCircles(bottomBar, -1)
+      this._shiftImgs(imgs, -1)
+    }
   }
-  */
+
+  _rightArrowClick(event) {
+    let bottomBar = document.getElementsByClassName('popout-bottom-bar')[0]
+    if (!bottomBar.lastChild.classList.contains('selected-circle')) {
+      let imgs = document.getElementsByClassName('popout-images')[0]
+      this._shiftCircles(bottomBar, 1)
+      this._shiftImgs(imgs, 1)
+    }
+  }
+
+  _shiftCircles(bottomBar, amount) {
+    let selected = bottomBar.getElementsByClassName('selected-circle')[0]
+    selected.src = circleImg
+    selected.classList.remove('selected-circle')
+    if (amount > 0) {
+      selected.nextSibling.src = selectedCircleImg
+      selected.nextSibling.classList.add('selected-circle')
+    } else {
+      selected.previousSibling.src = selectedCircleImg
+      selected.previousSibling.classList.add('selected-circle')
+    }
+  }
+
+  _shiftImgs(imgs, amount) {
+    let coords = imgs.getBoundingClientRect()
+    imgs.setAttribute('style', `top:${coords.y + (363 * amount)}px`)
+  }
+
 
 }

@@ -65,6 +65,10 @@
     transform: translateZ(0);
   }
 
+  .popout-image {
+    position: absolute;
+  }
+
   .popout-close {
     position: absolute;
     top: 0px;

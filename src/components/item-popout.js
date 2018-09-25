@@ -12,10 +12,28 @@ export default class ItemPopout {
     this.popoutDiv = this._createPopoutDiv()
   }
 
-  present(coords) {
-    this.popoutDiv.setAttribute('style', `left:${coords.x}px;top:${coords.y}px;`)
+  present() {
     this.popoutDiv = this._addInnerHtml(this.popoutDiv)
     document.getElementById('items').appendChild(this.popoutDiv)
+  }
+
+  shiftLeft() {
+    this.shiftCircles(-1)
+    this.shiftImages(-1)
+  }
+
+  shiftRight() {
+    this.shiftCircles(1)
+    this.shiftImages(1)
+  }
+
+  shiftCircles(amount) {
+    let bottomBar = document.getElementsByClassName('popout-bottom-bar')[0]
+    let visibleCircle = bottomBar.getElementsByClassName('selected-circle')[0]
+    let nextCircle = bottomBar.children[parseInt(visibleCircle.dataset.ind) + amount]
+    if (nextCircle) {
+      this._alterCircles(visibleCircle, nextCircle)    
+    }
   }
 
   shiftImages(amount) {
@@ -24,10 +42,7 @@ export default class ItemPopout {
     let visibleImage = images.getElementsByClassName('visible-image')[0]
     let nextImage = images.children[parseInt(visibleImage.dataset.ind) + amount]
     if (nextImage) {
-      visibleImage.classList.remove('visible-image')
-      visibleImage.classList.add('hidden')
-      nextImage.classList.remove('hidden')
-      nextImage.classList.add('visible-image')
+      this._alterImages(visibleImage, nextImage)
     }
   }
 
@@ -66,10 +81,12 @@ export default class ItemPopout {
   _leftArrow() {
     let leftDiv = document.createElement('div')
     leftDiv.classList.add('arrow-container-left')
+    leftDiv.dataset.id = this.id
     let leftImage = new Image()
     leftImage.src = leftArrow
     leftImage.alt = 'left-arrow'
     leftImage.classList.add('popout-arrow')
+    leftImage.dataset.id = this.id
     leftDiv.appendChild(leftImage)
     return leftDiv
   }
@@ -77,10 +94,12 @@ export default class ItemPopout {
   _rightArrow() {
     let rightDiv = document.createElement('div')
     rightDiv.classList.add('arrow-container-right')
+    rightDiv.dataset.id = this.id
     let rightImage = new Image()
     rightImage.src = rightArrow
     rightImage.alt = 'right-arrow'
     rightImage.classList.add('popout-arrow')
+    rightImage.dataset.id = this.id
     rightDiv.appendChild(rightImage)
     return rightDiv
   }
@@ -88,17 +107,38 @@ export default class ItemPopout {
   _bottomBar() {
     let bottomDiv = document.createElement('div')
     bottomDiv.classList.add('popout-bottom-bar')
-    let selectedCircle = new Image()
-    selectedCircle.src = selectedCircleImg
-    selectedCircle.classList.add('popout-bottom-circle', 'selected-circle')
-    bottomDiv.appendChild(selectedCircle)
-    for (let i = 0; i < this.images.length - 1; i++) {
-      let selector = new Image()
-      selector.src = circleImg
-      selector.classList.add('popout-bottom-circle')
-      bottomDiv.appendChild(selector)
-    }
+    bottomDiv = this._appendCircles(bottomDiv)
     return bottomDiv
+  }
+
+  _appendCircles(bottomDiv) {
+    this.images.forEach((image, ind) => {
+      let circle = new Image()
+      circle.classList.add('popout-bottom-circle')
+      if (ind == 0) {
+        circle.src = selectedCircleImg
+        circle.classList.add('selected-circle')
+      } else {
+        circle.src = circleImg
+      }
+      circle.dataset.ind = ind
+      bottomDiv.appendChild(circle)
+    })
+    return bottomDiv
+  }
+
+  _alterCircles(visibleCircle, nextCircle) {
+    visibleCircle.src = circleImg
+    visibleCircle.classList.remove('selected-circle')
+    nextCircle.src = selectedCircleImg
+    nextCircle.classList.add('selected-circle')
+  }
+
+  _alterImages(visibleImage, nextImage) {
+    visibleImage.classList.remove('visible-image')
+    visibleImage.classList.add('hidden')
+    nextImage.classList.remove('hidden')
+    nextImage.classList.add('visible-image')
   }
 
   _parseHtmlImages() {

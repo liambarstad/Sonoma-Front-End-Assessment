@@ -12,10 +12,11 @@ export default class Items {
     this._appendItems(data.groups, itemsDiv)
   }
 
-  displayPopout(parentEl, coordinates) {
+  displayPopout(parentEl) {
     this._removeAllPopouts()
+    document.getElementById('items').appendChild(this._matte())
     let item = this.items.find((item) => { return item.id === parentEl.id })
-    item.displayPopout(coordinates)
+    item.displayPopout()
   }
 
   _appendItems(data, itemsDiv) {
@@ -31,5 +32,15 @@ export default class Items {
     while (popouts.length > 0) {
       popouts[0].parentNode.removeChild(popouts[0])
     }
+  }
+
+  _matte() {
+    let matte = document.createElement('div')
+    matte.id = 'background-matte'
+    matte.setAttribute('style', `
+      height: ${window.outerHeight}px;
+      width: ${window.outerWidth}px;
+    `)
+    return matte
   }
 }

@@ -7,9 +7,19 @@
     flex-wrap: wrap;
   }
 
+  #background-matte {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.6);
+  }
+
   .item {
     transform: translateZ(0);
     width: 33%;
+    padding-bottom: 0.6em;
     display: inline;
     float: left;
     box-sizing: border-box;
@@ -17,7 +27,7 @@
 
   .item-title-container {
     position: fixed;
-    width: 87%;
+    width: 363px;
     height: 9%;
     top: 0;
     background-color: #eeeeed;
@@ -58,7 +68,9 @@
   }
 
   .item-popout {
-    position: absolute;
+    position: fixed;
+    top: 25%;
+    left: 35%;
     overflow: hidden;
     height: 363px;
     width: 363px;

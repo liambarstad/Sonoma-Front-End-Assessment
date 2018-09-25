@@ -12,67 +12,42 @@ export default class ItemsEventListeners {
     document.addEventListener('click', (event) => {
       let parentEl = event.target.parentElement
       if (parentEl.classList.contains('item')) {
-        this.items.displayPopout(parentEl, { x: event.clientX, y: event.clientY })
+        this.items.displayPopout(parentEl)
       }
     })
   }
 
   onPopoutClose() {
     document.addEventListener('click', (event) => {
-      if (event.target.classList.contains('popout-close')) {
-        event.target.parentElement.remove()
+      if (event.target.classList.contains('popout-close') || event.target.id == 'background-matte') {
+        document.getElementById('background-matte').remove()
+        document.getElementsByClassName('item-popout')[0].remove()
       }
     })
   }
 
   onArrowClick() {
     document.addEventListener('click', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
       let classes = event.target.classList
       let parentClasses = event.target.parentElement.classList
       if (classes.contains('arrow-container-left') || parentClasses.contains('arrow-container-left')) {
-        this._leftArrowClick(event)
+        this._leftArrowClick(event.target.dataset.id)
       } else if (classes.contains('arrow-container-right') || parentClasses.contains('arrow-container-right')) {
-        this._rightArrowClick(event)
+        this._rightArrowClick(event.target.dataset.id)
       }
     })
   }
 
-  _leftArrowClick(event) {
-    let bottomBar = document.getElementsByClassName('popout-bottom-bar')[0]
-    if (!bottomBar.firstChild.classList.contains('selected-circle')) {
-      let imgs = document.getElementsByClassName('popout-images')[0]
-      this._shiftCircles(bottomBar, -1)
-      this._shiftImgs(imgs, -1)
-    }
-  }
-
-  _rightArrowClick(event) {
-    let bottomBar = document.getElementsByClassName('popout-bottom-bar')[0]
-    if (!bottomBar.lastChild.classList.contains('selected-circle')) {
-      let imgs = document.getElementsByClassName('popout-images')[0]
-      this._shiftCircles(bottomBar, 1)
-      this._shiftImgs(imgs, 1)
-    }
-  }
-
-  _shiftCircles(bottomBar, amount) {
-    let selected = bottomBar.getElementsByClassName('selected-circle')[0]
-    selected.src = circleImg
-    selected.classList.remove('selected-circle')
-    if (amount > 0) {
-      selected.nextSibling.src = selectedCircleImg
-      selected.nextSibling.classList.add('selected-circle')
-    } else {
-      selected.previousSibling.src = selectedCircleImg
-      selected.previousSibling.classList.add('selected-circle')
-    }
-  }
-
-  _shiftImgs(imgs, amount) {
-    let id = imgs.dataset.id
+  _leftArrowClick(id) {
     let item = this.items.items.find((el) => { return el.id = id })
-    item.popout.shiftImages(amount)
+    item.popout.shiftLeft()
   }
 
+  _rightArrowClick(id) {
+    let item = this.items.items.find((el) => { return el.id = id })
+    item.popout.shiftRight()
+  }
 
 }

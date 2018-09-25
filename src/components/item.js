@@ -24,7 +24,7 @@ export default class Item {
           </a>
         </div>
         <div class="item-price-container">
-          <p class="item-price">$ ${this.high}</p>
+          <p class="item-price">$${this.low} - $${this.high}</p>
         </div>
       </div>
     `

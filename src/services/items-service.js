@@ -7,7 +7,6 @@ export default class ItemsService {
   }
 
   getItems() {
-    // need to fix cors issue
     return require('../data/items.json')
   }
 

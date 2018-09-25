@@ -12,7 +12,7 @@ export default class ItemsEventListeners {
     document.addEventListener('click', (event) => {
       let parentEl = event.target.parentElement
       if (parentEl.classList.contains('item')) {
-        let popout = this.items.displayPopout(parentEl, { x: event.clientX, y: event.clientY })
+        this.items.displayPopout(parentEl, { x: event.clientX, y: event.clientY })
       }
     })
   }
@@ -69,8 +69,9 @@ export default class ItemsEventListeners {
   }
 
   _shiftImgs(imgs, amount) {
-    let coords = imgs.getBoundingClientRect()
-    imgs.setAttribute('style', `top:${coords.y + (363 * amount)}px`)
+    let id = imgs.dataset.id
+    let item = this.items.items.find((el) => { return el.id = id })
+    item.popout.shiftImages(amount)
   }
 
 

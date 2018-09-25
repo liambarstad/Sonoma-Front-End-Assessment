@@ -36,7 +36,7 @@ export default class Item {
 
   _initializeImages() {
     this.images = this.data.images.map((image) => { return image.href })
-    this.popout = new ItemPopout(this.images)
+    this.popout = new ItemPopout(this.id, this.images)
   }
 
 }

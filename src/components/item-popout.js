@@ -5,17 +5,37 @@ const circleImg = require('../static/circle.svg')
 const selectedCircleImg = require('../static/selected-circle.svg')
 
 export default class ItemPopout {
-  constructor(images) {
+  constructor(id, images) {
+    this.id = id 
     this.images = images
     this.htmlImages = this._parseHtmlImages()
+    this.popoutDiv = this._createPopoutDiv()
   }
 
   present(coords) {
+    this.popoutDiv.setAttribute('style', `left:${coords.x}px;top:${coords.y}px;`)
+    this.popoutDiv = this._addInnerHtml(this.popoutDiv)
+    document.getElementById('items').appendChild(this.popoutDiv)
+  }
+
+  shiftImages(amount) {
+    this.popoutDiv = document.querySelector('.item-popout')
+    let images = this.popoutDiv.getElementsByClassName('popout-images')[0]
+    let visibleImage = images.getElementsByClassName('visible-image')[0]
+    let nextImage = images.children[parseInt(visibleImage.dataset.ind) + amount]
+    if (nextImage) {
+      visibleImage.classList.remove('visible-image')
+      visibleImage.classList.add('hidden')
+      nextImage.classList.remove('hidden')
+      nextImage.classList.add('visible-image')
+    }
+  }
+
+  _createPopoutDiv() {
     let popoutDiv = document.createElement('div')
     popoutDiv.classList.add('item-popout')
-    popoutDiv.setAttribute('style', `left:${coords.x}px;top:${coords.y}px;`)
-    popoutDiv = this._addInnerHtml(popoutDiv)
-    document.getElementById('items').appendChild(popoutDiv)
+    popoutDiv.dataset.id = this.id
+    return popoutDiv
   }
 
   _addInnerHtml(div) {
@@ -30,6 +50,7 @@ export default class ItemPopout {
   _images() {
     let images = document.createElement('div')
     images.classList.add('popout-images')
+    images.dataset.id = this.id
     images.innerHTML = this.htmlImages
     return images
   }
@@ -82,10 +103,14 @@ export default class ItemPopout {
 
   _parseHtmlImages() {
     let htmlStr = ''
-    this.images.forEach((imageUrl) => {
-      htmlStr += `
-        <img src=${imageUrl} class="popout-image" />
-      `
+    this.images.forEach((imageUrl, ind) => {
+      let classes = 'popout-image '
+      if (ind !== 0) { 
+        classes += 'hidden' 
+      } else {
+        classes += 'visible-image'
+      }
+      htmlStr += `<img src=${imageUrl} data-ind=${ind} class="${classes}" />`
     })
     return htmlStr
   }

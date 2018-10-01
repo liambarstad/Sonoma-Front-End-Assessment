@@ -4,20 +4,31 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "mocha",
+    "test": "jest",
     "build": "webpack",
     "start": "webpack-dev-server --mode=development"
+  },
+  "jest": {
+    "rootDir": ".",
+    "preset": "jest-puppeteer",
+    "verbose": true,
+    "globals": {
+      "PATH": "http://localhost:8080"
+    },
+    "testRegex": "./test/.*.js$"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^4.1.2",
     "file-loader": "^2.0.0",
-    "mocha": "^5.2.0",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
+    "webpack-dev-server": "^3.1.8",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "jest-puppeteer": "^3.4.0",
+    "puppeteer": "^1.8.0"
   },
   "dependencies": {
     "axios": "^0.18.0",

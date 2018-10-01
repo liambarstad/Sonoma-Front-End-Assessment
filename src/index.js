@@ -1,11 +1,11 @@
-const ItemsEventListeners = require('./event-listeners/items-event-listeners').default
-const Items = require('./components/items').default
+const ItemsEventListeners = require("./event-listeners/items-event-listeners").default;
+const Items = require("./components/items").default;
 
-let itemsListeners
+let itemsListeners;
 
 document.addEventListener("DOMContentLoaded", () => {
-  itemsListeners = new ItemsEventListeners()  
-  itemsListeners.onItemImageClick()
-  itemsListeners.onPopoutClose()
-  itemsListeners.onArrowClick()
+  itemsListeners = new ItemsEventListeners();
+  itemsListeners.onItemImageClick();
+  itemsListeners.onPopoutClose();
+  itemsListeners.onArrowClick();
 })

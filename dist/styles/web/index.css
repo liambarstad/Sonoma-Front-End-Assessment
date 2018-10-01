@@ -26,7 +26,7 @@
   }
 
   .item-title-container {
-    position: fixed;
+    position: absolute;
     width: 363px;
     height: 9%;
     top: 0;

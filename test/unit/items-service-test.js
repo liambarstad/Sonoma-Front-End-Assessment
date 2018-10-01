@@ -1,5 +1,5 @@
-const itemUrl = 'https://www.westelm.com/services/catalog/v4/category/shop/new/all-new/index.json'
-const ItemsService = require('../src/services/items-service')
+const itemUrl = 'http://www.westelm.com/services/catalog/v4/category/shop/new/all-new/index.json'
+const ItemsService = require('../../src/services/items-service')
 const assert = require('assert')
 
 describe('ItemService', () => {
